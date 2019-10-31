@@ -18,6 +18,9 @@ export class AutoresComponent implements OnInit {
 
   ngOnInit() {
     this.resetForm();   
+
+    
+    this.getAutores();
   }
 
 
@@ -32,7 +35,6 @@ export class AutoresComponent implements OnInit {
         FechaNacimiento : new Date()
       }  
 
-      this.getAutores();
   }
 
   getAutores(){

@@ -21,8 +21,10 @@ export class LibroService {
 
 
    getLibros(libro: Libro){
-  
-      let parametros = 'Libro/ListarLibros?Nombre=' + libro.Nombre + '&IdAutor=' + libro.IdAutor + '&IdCategoria=' + libro.IdCategoria;
+      let nombre = libro == undefined ? null : libro.Nombre;
+      let autor = libro == undefined ? 0 : libro.IdAutor;
+      let categoria = libro == undefined ? 0 : libro.IdCategoria;
+      let parametros = 'Libro/ListarLibros?Nombre=' + nombre + '&IdAutor=' + autor + '&IdCategoria=' + categoria;
       return this.http.get(environment.apiURL + parametros,this.httpOptions).pipe(
         map(this.extractData));
      

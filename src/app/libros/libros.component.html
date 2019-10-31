@@ -129,14 +129,14 @@
                 <tr *ngFor="let item of libros; let i= index;">
                     <td>{{i + 1}}</td>
                     <td>{{item.nombre}}</td>                    
-                    <td>{{item.idAutor}}</td>
-                    <td>{{item.idCategoria}}</td>
-                    <td>{{item.isbn}}</td>
+                    <td>{{item.nombreAutor}} {{item.ApellidoAutor}}</td>
+                    <td>{{item.categoria}}</td>
+                    <td>{{item.isnb}}</td>
                     <td>
-                        <button class="btn sm btn-primary text-white" title="Editar">
+                        <button class="btn sm btn-primary text-white" title="Editar" (click)="editCampos(item)">
                             <i class="fa fa-pencil"></i></button>
                         &nbsp;
-                        <button class="btn sm btn-danger text-white" title="Borrar">
+                        <button class="btn sm btn-danger text-white" title="Borrar" (click)="DelCategoria(item.id)">
                             <i class="fa fa-trash"></i></button>
                     </td>
                 </tr>

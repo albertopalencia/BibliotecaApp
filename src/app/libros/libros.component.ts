@@ -20,7 +20,7 @@ export class LibrosComponent implements OnInit {
 
   formData: Libro;
   filtroData: Libro;
-  libros: Libro[] = [];
+  libros: any[] = [];
   categorias: Categoria[] = [];
   autores: Autor[] = [];
   constructor(private serviceCategoria: CategoriaService, private serviceAutor: AutorService,
@@ -81,7 +81,8 @@ export class LibrosComponent implements OnInit {
   }
 
   getLibros(item?: any){
-    this.serviceLibro.getLibros(item).subscribe((data: any) => {      
+    this.serviceLibro.getLibros(item).subscribe((data: any) => {   
+      console.log('datos ',data);   
       this.libros = data;        
     });
   }
