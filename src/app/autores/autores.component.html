@@ -1,0 +1,79 @@
+<div class="card m-3">
+    <h5 class="card-header">Nueva Autor</h5>
+    <div class="card-body">
+        <form #form="ngForm" autocomplete="off" *ngIf="formData"
+        (ngSubmit)="form.form.valid && GuardarAutor(formData)" novalidate>
+
+            <div class="form-group">
+                <label for="">Nombres</label>
+                <input type="text" name="Nombre" #Nombre="ngModel" [(ngModel)]="formData.Nombre" class="form-control"
+                    [ngClass]="{ 'is-invalid': form.submitted && Nombre.invalid }" required>
+                <div *ngIf="form.submitted && Nombre.invalid" class="invalid-feedback">
+                    <div *ngIf="Nombre.errors.required">Campo requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Apellidos</label>
+                <input name="Apellidos" #Apellidos="ngModel" [(ngModel)]="formData.Apellidos" class="form-control"
+                    required [ngClass]="{ 'is-invalid': form.submitted && Apellidos.invalid }">
+                <div *ngIf="form.submitted && Apellidos.invalid" class="invalid-feedback">
+                    <div *ngIf="Apellidos.errors.required">Campo requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">Fecha Nacimiento</label>
+                <input type="date" format='yyyy-MM-dd' name="FechaNacimiento" #FechaNacimiento="ngModel"
+                    [(ngModel)]="formData.FechaNacimiento" class="form-control" required
+                    [ngClass]="{ 'is-invalid': form.submitted && FechaNacimiento.invalid }">
+                <div *ngIf="form.submitted && FechaNacimiento.invalid" class="invalid-feedback">
+                    <div *ngIf="FechaNacimiento.errors.required">Campo requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success">
+                    <i class="fa fa-check"></i> Guardar
+                </button>
+                &nbsp;
+                <button type="reset" class="btn btn-primary">
+                    <i class="fa fa-close"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div class="card m-3">
+    <h5 class="card-header">Autores</h5>
+    <div class="card-body">
+
+        <table class="table table-borderless table-striped">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Fecha Nacimiento</th>
+            </thead>
+            <tbody>
+                <tr *ngIf="autores.length === 0">
+                    <td class="font-italic text-center" colspan="4">
+                        No hay registros
+                    </td>
+                </tr>
+                <tr *ngFor="let item of autores; let i= index;">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.apellidos}}</td>
+                    <td>{{item.fechaNacimiento | date:'yyyy-MM-dd' }}</td>
+                    <td>
+                        <button class="btn sm btn-primary text-white" title="Editar" (click)="editCampos(item)">
+                            <i class="fa fa-pencil"></i></button>
+                        |
+                        <button class="btn sm btn-danger text-white" title="Borrar" (click)="DelAutor(item.id)">
+                            <i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>

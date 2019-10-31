@@ -1,0 +1,147 @@
+<div class="card m-3">
+    <h5 class="card-header">Nuevo Libro</h5>
+    <div class="card-body">
+        <form #form="ngForm" autocomplete="off" *ngIf="formData" (ngSubmit)="form.form.valid && GuardarLibro(formData)"
+            novalidate>
+
+
+            <div class="form-group">
+                <label for="">Nombre</label>
+                <input type="text" name="Nombre" #Nombre="ngModel" [(ngModel)]="formData.Nombre" required
+                    class="form-control" [ngClass]="{ 'is-invalid': form.submitted && Nombre.invalid }">
+                <div *ngIf="form.submitted && Nombre.invalid" class="invalid-feedback">
+                    <div *ngIf="Nombre.errors.required">Campo requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="form-group">
+                        <label for="">Autores</label>
+                        <select name="IdAutor" #IdAutor="ngModel" [(ngModel)]="formData.IdAutor" required
+                            class="form-control" [ngClass]="{ 'is-invalid': form.submitted && IdAutor.invalid }">
+                            <option value="0" disabled>Seleccione</option>
+                            <option *ngFor="let item of autores" value="{{item.id}}">
+                                {{item.nombre}}
+                            </option>
+                        </select>
+                        <div *ngIf="form.submitted && Autor.invalid" class="invalid-feedback">
+                            <div *ngIf="IdAutor.errors.required">Campo requerido</div>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="">Categorias</label>
+                <select name="IdCategoria" #IdCategoria="ngModel" [(ngModel)]="formData.IdCategoria" required
+                    class="form-control" [ngClass]="{ 'is-invalid': form.submitted && IdCategoria.invalid }">
+                    <option value="0" disabled>Seleccione</option>
+                    <option *ngFor="let item of categorias" value="{{item.id}}">
+                        {{item.nombre}}
+                    </option>
+                </select>
+                <div *ngIf="form.submitted && Autor.invalid" class="invalid-feedback">
+                    <div *ngIf="IdCategoria.errors.required">Campo requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">ISBN</label>
+                <input type="text" name="Isnb" #Isnb="ngModel" [(ngModel)]="formData.Isnb" required class="form-control"
+                    [ngClass]="{ 'is-invalid': form.submitted && Isnb.invalid }">
+                <div *ngIf="form.submitted && Isnb.invalid" class="invalid-feedback">
+                    <div *ngIf="Isnb.errors.required">Campo requerido</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-success">
+                    <i class="fa fa-check"></i> Guardar
+                </button> &nbsp;
+                <button type="reset" class="btn btn-primary">
+                    <i class="fa fa-clear"></i> Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<div class="card m-3">
+    <h5 class="card-header"> Libros</h5>
+    <div class="card-body">
+        <div class="card m-3">
+            <h5 class="card-header"> Busqueda de libros</h5>
+            <div class="card-body">
+                    <form #form="ngForm" autocomplete="off" *ngIf="filtroData" (ngSubmit)="form.form.valid && BuscarLibro(filtroData)">
+        
+        
+                    <div class="form-group">
+                        <label for="">Nombre</label>
+                        <input type="text" name="Nombre" #Nombre="ngModel" [(ngModel)]="filtroData.Nombre" required
+                            class="form-control">                        
+                    </div>
+                    <div class="form-group">
+                            <label for="">Autores</label>
+                            <select name="IdAutor" #IdAutor="ngModel" [(ngModel)]="filtroData.IdAutor"
+                                class="form-control">
+                                <option value="0" disabled>Seleccione</option>
+                                <option *ngFor="let item of autores" value="{{item.id}}">
+                                    {{item.nombre}}
+                                </option>
+                            </select>                        
+                        </div>
+                    <div class="form-group">
+                        <label for="">Categorias</label>
+                        <select name="IdCategoria" #IdCategoria="ngModel" [(ngModel)]="filtroData.IdCategoria" required
+                            class="form-control">
+                            <option value="0" disabled>Seleccione</option>
+                            <option *ngFor="let item of categorias" value="{{item.id}}">
+                                {{item.nombre}}
+                            </option>
+                        </select>                        
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" (click)="getLibros(filtroData)">
+                            <i class="fa fa-search"></i> Buscar
+                        </button> &nbsp;
+                        <button type="reset" class="btn btn-primary">
+                            <i class="fa fa-clear"></i> Limpiar Filtro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+        <table class="table table-borderless table-striped">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>   
+                <th scope="col">Autor</th>                
+                <th scope="col">Categoria</th>                
+                <th scope="col">Isbn</th>
+                <th scope="col"></th>
+            </thead>
+            <tbody>
+                <tr *ngIf="libros.length === 0">
+                    <td class="font-italic text-center" colspan="6">
+                        No hay registros
+                    </td>
+                </tr>
+                <tr *ngFor="let item of libros; let i= index;">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.nombre}}</td>                    
+                    <td>{{item.idAutor}}</td>
+                    <td>{{item.idCategoria}}</td>
+                    <td>{{item.isbn}}</td>
+                    <td>
+                        <button class="btn sm btn-primary text-white" title="Editar">
+                            <i class="fa fa-pencil"></i></button>
+                        &nbsp;
+                        <button class="btn sm btn-danger text-white" title="Borrar">
+                            <i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
